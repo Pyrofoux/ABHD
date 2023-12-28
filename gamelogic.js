@@ -179,6 +179,8 @@ function mouseReleased()
   switch(game_state)
   {
     case "aiming":
+
+      if(mouse.x >= 0 && mouse.x <= map_width*b_unit && mouse.y >= 0 && mouse.y <= map_width*b_unit)
       throwAllBalls();
     break;
 
