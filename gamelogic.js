@@ -108,16 +108,16 @@ function generateBlockline()
 
   for(var x = 0; x < map_width; x++)
   {
-    if(random() <= block_spawn_rate && x != spawn_bonus) // fill w blocks
+    if(random() <= bonus_spawn_rate || x == spawn_bonus) // empty cells have a chance to have a bonus
     {
-      var upper_bound = max(current_level+2, (current_level**1.5))
+      makeBonus(x, -1);
+    }
+    else if(random() <= block_spawn_rate && x != spawn_bonus) // fill w blocks
+    {
+      var upper_bound = max(current_level+2, current_level*2)
       var value = int(random(1,upper_bound));
       value = min(value, 999)
       makeBlock(x,-1, value)
-    }
-    else if(random() <= bonus_spawn_rate || x == spawn_bonus) // empty cells have a chance to have a bonus
-    {
-      makeBonus(x, -1);
     }
   }
   game_state = "aiming";
