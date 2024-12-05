@@ -47,6 +47,7 @@ let game_state = "aiming";
 let moving_balls = 0;
 let balls, blocks, bonus;
 let score = 0;
+let ball_speed_mutiplier = 1;
 
 function setup() {
   textStyle("bold")
@@ -114,7 +115,9 @@ function generateBlockline()
     }
     else if(random() <= block_spawn_rate && x != spawn_bonus) // fill w blocks
     {
+      //var upper_bound = max(current_level+2, current_level*2)
       var upper_bound = max(current_level+2, current_level*2)
+      var upper_bound = min(upper_bound, Math.ceil((extra_balls+1)*1.75))
       var value = int(random(1,upper_bound));
       value = min(value, 999)
       makeBlock(x,-1, value)
@@ -195,6 +198,20 @@ function throwAllBalls()
   game_state = "throwing";
 
   var start_x = balls[0].x;
+  var start_a = balls[0].angleTo(mouse); // ranges from -180 (far left) to 0 (far right)
+  start_a += 90
+
+  if(Math.abs(start_a) > 80)
+  {
+    var delta_angle = (Math.abs(start_a) - 80)/5
+    ball_speed_mutiplier = 1+ delta_angle;
+    //alert(delta_angle)
+  }
+  else
+  {
+
+    ball_speed_mutiplier = 1;
+  }
   balls.remove();
   balls = new Group(); // have to recreate a new group so overlaps are not broken :/
 

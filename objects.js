@@ -207,7 +207,7 @@ function makeBall(x, isExtra=false)
         spr.visible = true;
         spr.direction = spr.future_direction;
         spr.future_direction = false;
-	      spr.speed = ball_speed;
+	      spr.speed = ball_speed * ball_speed_mutiplier;
       }
     }
     
